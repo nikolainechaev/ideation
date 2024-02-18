@@ -1,0 +1,5 @@
+.env
+node_modules
+creds.json
+firebase-debug.log
+package-lock.json
