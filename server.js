@@ -88,4 +88,30 @@ app.post("/createTranslator", async (req, res) => {
   }
 });
 
+app.get("/getAllMentors", async (req, res) => {
+  try {
+    // Query all documents from the "mentors" collection
+    const mentorsSnapshot = await db.collection("mentors").get();
+    // Array to store mentor data
+    const mentors = [];
+    // Loop through each mentor document
+    mentorsSnapshot.forEach((doc) => {
+      // Get mentor data
+      const mentorData = doc.data();
+
+      // Add mentor data to the array
+      mentors.push({
+        id: doc.id,
+        ...mentorData,
+      });
+    });
+
+    // Send the array of mentors as a response
+    res.status(200).json({ mentors });
+  } catch (error) {
+    console.error("Error happend when getting the list of mentors: ", error);
+    res.status(500).json({ error: "Failed to list mentors" });
+  }
+});
+
 app.listen(port, () => console.log(`Server has started on port: ${port}`));
