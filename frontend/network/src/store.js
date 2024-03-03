@@ -1,4 +1,11 @@
 import { createStore } from 'vuex'
+import { initializeApp } from 'firebase/app'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth' // Import signInWithEmailAndPassword
+
+const firebaseConfig = {}
+const firebaseApp = initializeApp(firebaseConfig)
+
+const auth = getAuth(firebaseApp)
 
 const store = createStore({
   state: {
@@ -20,23 +27,25 @@ const store = createStore({
       state.user.data = data
     }
   },
-  async logIn(context, { email, password }) {
-    const response = await signInWithEmailAndPassword(auth, email, password)
-    if (response) {
-      context.commit('SET_USER', response.user)
-    } else {
-      throw new Error('login failed')
-    }
-  },
-  async fetchUser(context, user) {
-    context.commit('SET_LOGGED_IN', user !== null)
-    if (user) {
-      context.commit('SET_USER', {
-        displayName: user.displayName,
-        email: user.email
-      })
-    } else {
-      context.commit('SET_USER', null)
+  actions: {
+    async logIn(context, { email, password }) {
+      const response = await signInWithEmailAndPassword(auth, email, password)
+      if (response) {
+        context.commit('SET_USER', response.user)
+      } else {
+        throw new Error('login failed')
+      }
+    },
+    async fetchUser(context, user) {
+      context.commit('SET_LOGGED_IN', user !== null)
+      if (user) {
+        context.commit('SET_USER', {
+          displayName: user.displayName,
+          email: user.email
+        })
+      } else {
+        context.commit('SET_USER', null)
+      }
     }
   }
 })
