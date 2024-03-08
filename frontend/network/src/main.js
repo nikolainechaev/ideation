@@ -1,19 +1,12 @@
 import './assets/main.css'
-
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-
-import firebaseConfig from '../../../api-key.json'
+import { auth, firebaseConfig } from '../../../api-key.js'
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig)
-
-//initialize firebase auth
-const auth = getAuth()
 
 import store from './store'
 

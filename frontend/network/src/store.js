@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
 import { initializeApp } from 'firebase/app'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth' // Import signInWithEmailAndPassword
+import { firebaseConfig } from '../../../api-key'
 
-const firebaseConfig = {}
 const firebaseApp = initializeApp(firebaseConfig)
 
 const auth = getAuth(firebaseApp)
